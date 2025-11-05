@@ -1,0 +1,25 @@
+services:
+  php-app:
+    image: php:8.2-cli
+    container_name: php-app
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    ports:
+      - "8000:8000"
+    command: php -S 0.0.0.0:8000
+
+  php-tests:
+    image: php:8.2-cli
+    container_name: php-tests
+    volumes:
+      - .:/var/www/html
+    working_dir: /var/www/html
+    command: ./vendor/bin/phpunit PhpTests.php
+
+  composer:
+    build: .
+    working_dir: /var/www/html
+    volumes:
+      - .:/var/www/html
+    entrypoint: ["composer"]
